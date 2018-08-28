@@ -2,6 +2,7 @@ package br.caelum.financas.teste;
 
 import javax.persistence.EntityManager;
 
+import br.caelum.financas.dao.ContaDao;
 import br.caelum.financas.modelo.Conta;
 import br.caelum.financas.util.JPAUtil;
 
@@ -15,14 +16,17 @@ public class TesteInsereConta {
 		try {
 			em = jpaUtil.getControleFinancasEM();
 			
+			ContaDao contaDao = new ContaDao(em);
+			
 			em.getTransaction().begin();
 			
 			Conta conta = getContaMock();
-			em.persist(conta);
+			contaDao.salva(conta);
 			
 			em.getTransaction().commit();
 			
 			System.out.println("Conta gravada com sucesso!");
+			System.out.println(conta);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			
@@ -43,7 +47,7 @@ public class TesteInsereConta {
 
 	private static Conta getContaMock() {
 		Conta conta = new Conta();
-		conta.setTitular("José Roberto");
+		conta.setTitular("Alex Alves");
 		conta.setBanco("Banco do Brasil");
 		conta.setNumero("123456-6");
 		conta.setAgencia("0999");
