@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 @Entity
 public class Movimentacao {
@@ -83,5 +85,12 @@ public class Movimentacao {
 		return "Movimentacao [id=" + id + ", descricao=" + descricao
 				+ ", data=" + data + ", valor=" + valor + ", tipoMovimentacao="
 				+ tipoMovimentacao + ", conta=" + conta + "]";
+	}
+	
+	@PrePersist
+	@PreUpdate
+	public void preAltera() {
+		System.out.println("Atualizando a data da movimentação");
+		setData(LocalDateTime.now());
 	}
 }
